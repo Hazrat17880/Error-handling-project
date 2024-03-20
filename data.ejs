@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../uploads/home.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data</title>
+</head>
+
+<body>
+    <table style="border: 1px solid black;">
+        <tr>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Image</th>
+        </tr>
+
+        <% if (users) { %>
+            <% users.forEach(user => { %>
+                <tr>
+                    <td><%= user.userName %></td>
+                    <td><%= user.password %></td>
+                    <td>
+                        <img src="<%= user.profileImage %>"style="width: 100px; height: 100px;">
+                    </td>
+                </tr>
+            <% }); %>
+        <% } else { %>
+            <tr>
+                <td colspan="3">No users found</td>
+            </tr>
+        <% } %>
+    </table>
+</body>
+
+</html>

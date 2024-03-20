@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is the home page</h1>
+
+    <br>
+    <form action="/register" method="post" enctype="multipart/form-data" id="form">
+        <input type="text" name="name" placeholder="Enter your name" id="name">
+        <div id="nameError"></div>
+        <br><br>
+        <input type="password" name="password" placeholder="Enter your password" id="password">
+        <div id="passwordError"></div>
+        <br><br>
+        <input type="file" name="profileImage"><br><br>
+        <button type="submit">Register</button>
+    </form>
+
+    <br><br><br>
+    <button><a href="/data">Get Data</a></button>
+    <br><br>
+
+    <script>
+        const form = document.getElementById("form");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("name");
+            const password = document.getElementById("password");
+
+            const nameValue = name.value;
+            const passwordValue = password.value;
+
+            // GET THE ID OF THE ERRORS DIV
+            const nameError = document.getElementById("nameError");
+            const passwordError = document.getElementById("passwordError");
+
+            const response = await fetch("/register", {
+                method: "POST",
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify({ name: nameValue, password: passwordValue })
+            });
+
+            const data = await response.json();
+            if (data.error) { // Change from data.errors to data.error
+                nameError.textContent = data.error.userName || "";
+                passwordError.textContent = data.error.password || "";
+            }
+        });
+    </script>
+</body>
+</html>
